@@ -32,4 +32,25 @@ describe("createBook - Services", () => {
             genre: 'Fantasy',
         })).rejects.toThrowError('Book already exists');
     });
+
+    it('should create a book with the next id', async () => {
+        const booksRepository = new InMemoryBooksRepository();
+        const sut = new CreateBook(booksRepository);
+
+        const book = await sut.execute({
+            title: 'The Lord of the Rings',
+            author: 'J.R.R. Tolkien',
+            genre: 'Fantasy',
+        });
+
+        expect(book.id).toBe(1);
+
+        const book2 = await sut.execute({
+            title: 'The Hobbit',
+            author: 'J.R.R. Tolkien',
+            genre: 'Fantasy',
+        });
+
+        expect(book2.id).toBe(2);
+    });
 });
