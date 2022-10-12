@@ -3,6 +3,11 @@ import { Book } from "../../entities/book";
 
 export class InMemoryBooksRepository implements BooksRepository {
     private books: Book[] = [];
+    private currentId = 0;
+
+    getNextId(): number {
+        return ++this.currentId;
+    }
 
     async create(book: Book): Promise<void> {
         this.books.push(book);
