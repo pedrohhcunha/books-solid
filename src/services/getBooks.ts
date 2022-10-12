@@ -3,7 +3,7 @@ import { Book } from "../entities/book";
 
 type GetBooksResponse = Book[];
 
-export class getBooks {
+export class GetBooks {
     constructor(
         private booksRepository: BooksRepository
     ) {
