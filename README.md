@@ -30,7 +30,7 @@ Please make sure to update tests as appropriate.
 ## TODO
 - [X] Create a unique id for each book
 - [ ] Allow to edit a book
-- [ ] Allow to delete a book
+- [X] Allow to delete a book
 - [ ] Create an author entity and allow to add authors to books
 - [ ] Connect to a database
 - [ ] Create an API to use the app
