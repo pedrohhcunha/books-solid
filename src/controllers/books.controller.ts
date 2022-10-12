@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
-import { InMemoryBooksRepository } from "../repositories/inMemory/inMemoryBooksRepository";
 import { CreateBook } from "../services/createBook";
+import { GetBooks } from "../services/getBooks";
+import { MongoDBBooksRepository } from "../repositories/mongoDB/MongoDBBooksRepository";
 
 export class BooksController {
+
     public async createBook(req: Request, res: Response) {
         const { title, author, genre } = req.body;
 
@@ -12,7 +14,7 @@ export class BooksController {
             });
         }
 
-        const booksRepository = new InMemoryBooksRepository();
+        const booksRepository = new MongoDBBooksRepository();
         const createBook = new CreateBook(booksRepository);
 
         const book = await createBook.execute({
@@ -33,8 +35,20 @@ export class BooksController {
     }
 
     public async getBooks(req: Request, res: Response) {
+        const booksRepository = new MongoDBBooksRepository();
+        const getBooks = new GetBooks(booksRepository);
+
+        const books = await getBooks.execute();
+        const booksFiltered = books.map(book => ({
+            id: book.id,
+            title: book.title,
+            author: book.author,
+            genre: book.genre,
+        }));
+
         res.status(200).json({
-            message: 'GET BOOKS',
+            message: 'Books retrieved successfully',
+            books: booksFiltered,
         });
     }
 
