@@ -1,26 +1,69 @@
 import { BooksRepository } from '../booksRepository';
 import { Book } from "../../entities/book";
+import { BookSchemma } from "../../models/book.model";
 
 export class MongoDBBooksRepository implements BooksRepository {
+    private currentId = 0;
+
+    getNextId(): number {
+        return ++this.currentId;
+    }
+
     async create(book: Book): Promise<void> {
-        throw new Error("Method not implemented.");
+        const bookSchemma = new BookSchemma({
+            id_book: book.id,
+            title: book.title,
+            author: book.author,
+            genre: book.genre,
+        });
+        await bookSchemma.save();
     }
+
     async findByTitle(title: string): Promise<Book | undefined> {
-        throw new Error("Method not implemented.");
+        const book = await BookSchemma.findOne({ title: title });
+
+        if (!book) return undefined;
+
+        return new Book({
+            id: book.id_book,
+            title: book.title,
+            author: book.author,
+            genre: book.genre,
+        });
     }
+
     async findById(id: number): Promise<Book | undefined> {
-        throw new Error("Method not implemented.");
+        const book = await BookSchemma.findOne({ id_book: id });
+
+        if (!book) return undefined;
+
+        return new Book({
+            id: book.id_book,
+            title: book.title,
+            author: book.author,
+            genre: book.genre,
+        });
     }
+
     async findAll(): Promise<Book[]> {
-        throw new Error("Method not implemented.");
+        const books = await BookSchemma.find();
+
+        return books.map((book) => new Book({
+            id: book.id_book,
+            title: book.title,
+            author: book.author,
+            genre: book.genre,
+        }));
     }
+
     async delete(id: number): Promise<void> {
-        throw new Error("Method not implemented.");
+        await BookSchemma.deleteOne({ id_book: id });
     }
     async update(book: Book): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    getNextId(): number {
-        throw new Error("Method not implemented.");
+        await BookSchemma.updateOne({ id_book: book.id }, {
+            title: book.title,
+            author: book.author,
+            genre: book.genre,
+        });
     }
 }
