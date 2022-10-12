@@ -1,11 +1,7 @@
-export function generateString(length: number) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    let result = '';
-
-    while (result.length < length) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
+export function generateString(length: number): string {
+    if(length < 0) {
+        throw new Error('Length must be a positive number');
     }
 
-    return result;
+    return Array.from({ length }, () => Math.random().toString(36)[2]).join('');
 }
