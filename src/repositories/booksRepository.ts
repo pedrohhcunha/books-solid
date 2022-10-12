@@ -5,4 +5,6 @@ export interface BooksRepository {
     findByTitle(title: string): Promise<Book | undefined>;
     findAll(): Promise<Book[]>;
     getNextId(): number;
+    findById(id: number): Promise<Book | undefined>;
+    delete(id: number): Promise<void>;
 }
