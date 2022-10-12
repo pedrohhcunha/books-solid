@@ -5,6 +5,7 @@ import { generateString } from "../utils/generateString";
 describe('Book - Entites', () => {
     it('should return a book', () => {
         const book = new Book({
+            id: 1,
             title: 'The Hobbit',
             author: 'J.R.R. Tolkien',
             genre: 'Fantasy',
@@ -19,6 +20,7 @@ describe('Book - Entites', () => {
     it('should throw an error if the title is empty', () => {
         expect(() => {
             new Book({
+                id: 1,
                 title: '',
                 author: 'J.R.R. Tolkien',
                 genre: 'Fantasy',
@@ -29,6 +31,7 @@ describe('Book - Entites', () => {
     it('should throw an error if the title is longer than 144 characters', () => {
         expect(() => {
             new Book({
+                id: 1,
                 title: generateString(145),
                 author: 'J.R.R. Tolkien',
                 genre: 'Fantasy',
@@ -39,6 +42,7 @@ describe('Book - Entites', () => {
     it('should throw an error if the author is empty', () => {
         expect(() => {
             new Book({
+                id: 1,
                 title: 'The Hobbit',
                 author: '',
                 genre: 'Fantasy',
@@ -49,6 +53,7 @@ describe('Book - Entites', () => {
     it('should throw an error if the author is longer than 44 characters', () => {
         expect(() => {
             new Book({
+                id: 1,
                 title: 'The Hobbit',
                 author: generateString(45),
                 genre: 'Fantasy',
@@ -59,6 +64,7 @@ describe('Book - Entites', () => {
     it('should throw an error if the genre is empty', () => {
         expect(() => {
             new Book({
+                id: 1,
                 title: 'The Hobbit',
                 author: 'J.R.R. Tolkien',
                 genre: '',
@@ -69,6 +75,7 @@ describe('Book - Entites', () => {
     it('should throw an error if the genre is longer than 16 characters', () => {
         expect(() => {
             new Book({
+                id: 1,
                 title: 'The Hobbit',
                 author: 'J.R.R. Tolkien',
                 genre: generateString(17),
