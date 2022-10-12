@@ -7,7 +7,7 @@ describe('Book - Entites', () => {
         const book = new Book({
             title: 'The Hobbit',
             author: 'J.R.R. Tolkien',
-            genre: 'Fantasy'
+            genre: 'Fantasy',
         });
 
         expect(book.title).toBe('The Hobbit');
@@ -21,7 +21,7 @@ describe('Book - Entites', () => {
             new Book({
                 title: '',
                 author: 'J.R.R. Tolkien',
-                genre: 'Fantasy'
+                genre: 'Fantasy',
             });
         }).toThrowError('The title must be between 1 and 144 characters');
     });
@@ -31,7 +31,7 @@ describe('Book - Entites', () => {
             new Book({
                 title: generateString(145),
                 author: 'J.R.R. Tolkien',
-                genre: 'Fantasy'
+                genre: 'Fantasy',
             });
         }).toThrowError('The title must be between 1 and 144 characters');
     });
@@ -41,7 +41,7 @@ describe('Book - Entites', () => {
             new Book({
                 title: 'The Hobbit',
                 author: '',
-                genre: 'Fantasy'
+                genre: 'Fantasy',
             });
         }).toThrowError('The author must be between 1 and 44 characters');
     });
@@ -51,7 +51,7 @@ describe('Book - Entites', () => {
             new Book({
                 title: 'The Hobbit',
                 author: generateString(45),
-                genre: 'Fantasy'
+                genre: 'Fantasy',
             });
         }).toThrowError('The author must be between 1 and 44 characters');
     });
@@ -61,7 +61,7 @@ describe('Book - Entites', () => {
             new Book({
                 title: 'The Hobbit',
                 author: 'J.R.R. Tolkien',
-                genre: ''
+                genre: '',
             });
         }).toThrowError('The genre must be between 1 and 16 characters');
     });
@@ -71,7 +71,7 @@ describe('Book - Entites', () => {
             new Book({
                 title: 'The Hobbit',
                 author: 'J.R.R. Tolkien',
-                genre: generateString(17)
+                genre: generateString(17),
             });
         }).toThrowError('The genre must be between 1 and 16 characters');
     });
