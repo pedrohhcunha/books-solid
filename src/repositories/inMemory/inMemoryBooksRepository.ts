@@ -28,4 +28,13 @@ export class InMemoryBooksRepository implements BooksRepository {
     async delete(id: number): Promise<void> {
         this.books = this.books.filter(book => book.id !== id);
     }
+
+    async update(book: Book): Promise<void> {
+        this.books = this.books.map((bookSaved) => {
+            if (bookSaved.id !== book.id) {
+                return bookSaved;
+            }
+            return book;
+        })
+    }
 }

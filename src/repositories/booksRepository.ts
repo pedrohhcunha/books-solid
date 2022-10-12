@@ -2,9 +2,10 @@ import { Book } from "../entities/book";
 
 export interface BooksRepository {
     create(book: Book): Promise<void>;
-    findByTitle(title: string): Promise<Book | undefined>;
-    findAll(): Promise<Book[]>;
-    getNextId(): number;
-    findById(id: number): Promise<Book | undefined>;
+    update(book: Book): Promise<void>;
     delete(id: number): Promise<void>;
+    findAll(): Promise<Book[]>;
+    findByTitle(title: string): Promise<Book | undefined>;
+    findById(id: number): Promise<Book | undefined>;
+    getNextId(): number;
 }
