@@ -1,4 +1,5 @@
 export interface BookProps {
+    id: number;
     title: string;
     author: string;
     genre: string;
@@ -6,6 +7,10 @@ export interface BookProps {
 
 export class Book {
     private props: BookProps;
+
+    get id() {
+        return this.props.id;
+    }
 
     get title() {
         return this.props.title;
