@@ -1,28 +1,30 @@
 import { MongoDBBooksRepository } from "../repositories/mongoDB/MongoDBBooksRepository";
-import { CreateBook }  from "../services/createBook";
+import { UpdateBook }  from "../services/updateBook";
 import { Request, Response } from "express";
 
-export class CreateBookController {
+export class UpdateBookController {
     public async handle(req: Request, res: Response) {
+        const { id } = req.params;
         const { title, author, genre } = req.body;
 
-        if (!title || !author || !genre) {
+        if (!id || !title || !author || !genre) {
             return res.status(400).json({
                 message: 'Bad Request',
             });
         }
 
         const booksRepository = new MongoDBBooksRepository();
-        const createBook = new CreateBook(booksRepository);
+        const updateBook = new UpdateBook(booksRepository);
 
-        const book = await createBook.execute({
+        const book = await updateBook.execute({
+            id: parseInt(id),
             title,
             author,
             genre,
         });
 
-        res.status(201).json({
-            message: 'Book created successfully',
+        res.status(200).json({
+            message: 'Book updated successfully',
             book: {
                 id: book.id,
                 title: book.title,
@@ -30,5 +32,5 @@ export class CreateBookController {
                 genre: book.genre,
             },
         });
-    };
+    }
 }

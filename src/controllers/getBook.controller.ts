@@ -1,28 +1,24 @@
 import { MongoDBBooksRepository } from "../repositories/mongoDB/MongoDBBooksRepository";
-import { CreateBook }  from "../services/createBook";
 import { Request, Response } from "express";
+import { GetBook } from "../services/getBook";
 
-export class CreateBookController {
+export class GetBookController {
     public async handle(req: Request, res: Response) {
-        const { title, author, genre } = req.body;
+        const { id } = req.params;
 
-        if (!title || !author || !genre) {
+        if (!id) {
             return res.status(400).json({
                 message: 'Bad Request',
             });
         }
 
         const booksRepository = new MongoDBBooksRepository();
-        const createBook = new CreateBook(booksRepository);
+        const getBook = new GetBook(booksRepository);
 
-        const book = await createBook.execute({
-            title,
-            author,
-            genre,
-        });
+        const book = await getBook.execute(parseInt(id));
 
-        res.status(201).json({
-            message: 'Book created successfully',
+        res.status(200).json({
+            message: 'Book retrieved successfully',
             book: {
                 id: book.id,
                 title: book.title,
