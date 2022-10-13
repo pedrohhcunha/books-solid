@@ -5,7 +5,7 @@ export class InMemoryBooksRepository implements BooksRepository {
     private books: Book[] = [];
     private currentId = 0;
 
-    getNextId(): number {
+    async getNextId(): Promise<number> {
         return ++this.currentId;
     }
 

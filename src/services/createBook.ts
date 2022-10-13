@@ -25,7 +25,7 @@ export class CreateBook {
             throw new Error("Book already exists");
         }
 
-        const id = this.booksRepository.getNextId();
+        const id = await this.booksRepository.getNextId();
 
         const book = new Book({ id, title, author, genre });
 

@@ -1,12 +1,32 @@
 import { BooksRepository } from '../booksRepository';
 import { Book } from "../../entities/book";
 import { BookSchemma } from "../../models/book.model";
+import { CounterSchema } from "../../models/counter.model";
 
 export class MongoDBBooksRepository implements BooksRepository {
-    private currentId = 0;
 
-    getNextId(): number {
-        return ++this.currentId;
+    // Generate an ascending id using mongodb
+    async getNextId(): Promise<number> {
+        const bookIdCounter = await CounterSchema.findByIdAndUpdate({
+            _id: "bookId",
+        }, {
+            $inc: {
+                sequence: 1,
+            },
+        }, {
+            new: true,
+        });
+
+        if(!bookIdCounter) {
+            const newCounter = new CounterSchema({
+                _id: "bookId",
+                sequence: 1,
+            });
+            await newCounter.save();
+            return 1;
+        }
+
+        return bookIdCounter.sequence;
     }
 
     async create(book: Book): Promise<void> {

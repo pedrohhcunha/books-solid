@@ -7,5 +7,5 @@ export interface BooksRepository {
     findAll(): Promise<Book[]>;
     findByTitle(title: string): Promise<Book | undefined>;
     findById(id: number): Promise<Book | undefined>;
-    getNextId(): number;
+    getNextId(): Promise<number>;
 }
