@@ -2,10 +2,16 @@
 This is a project to create a books/library app using SOLID principles and other good practices.
 Automated tests are written using Vitest.
 
-## How to run
+## How to test
 1. Clone the repo
 2. Run `npm install`
-3. Run `npm test`
+3. Run `npm test
+
+## How to runs
+1. Clone the repo
+2. Run `npm install`
+3. Run `npm start`
+4. Open `http://localhost:3000`
 
 ## How to contribute
 1. Fork the repo
