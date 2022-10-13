@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { CreateBook } from "../services/createBook";
 import { GetBooks } from "../services/getBooks";
 import { MongoDBBooksRepository } from "../repositories/mongoDB/MongoDBBooksRepository";
+import { DeleteBook } from "../services/deleteBook";
+import {UpdateBook} from "../services/updateBook";
 
 export class BooksController {
 
@@ -59,14 +61,58 @@ export class BooksController {
     }
 
     public async updateBook(req: Request, res: Response) {
+        const { id } = req.params;
+        const { title, author, genre } = req.body;
+
+        if (!id || !title || !author || !genre) {
+            return res.status(400).json({
+                message: 'Bad Request',
+            });
+        }
+
+        const booksRepository = new MongoDBBooksRepository();
+        const updateBook = new UpdateBook(booksRepository);
+
+        const book = await updateBook.execute({
+            id: parseInt(id),
+            title,
+            author,
+            genre,
+        });
+
         res.status(200).json({
-            message: 'PATCH ESPECIFIC BOOK',
+            message: 'Book updated successfully',
+            book: {
+                id: book.id,
+                title: book.title,
+                author: book.author,
+                genre: book.genre,
+            },
         });
     }
 
     public async deleteBook(req: Request, res: Response) {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({
+                message: 'Bad Request',
+            });
+        }
+
+        const booksRepository = new MongoDBBooksRepository();
+        const deleteBook = new DeleteBook(booksRepository);
+
+        const bookDeleted = await deleteBook.execute(parseInt(id));
+
         res.status(200).json({
-            message: 'DELETE ESPECIFIC BOOK',
+            message: 'Book deleted successfully',
+            book: {
+                id: bookDeleted.id,
+                title: bookDeleted.title,
+                author: bookDeleted.author,
+                genre: bookDeleted.genre,
+            },
         });
     }
 }
