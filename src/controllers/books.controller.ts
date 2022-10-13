@@ -3,7 +3,8 @@ import { CreateBook } from "../services/createBook";
 import { GetBooks } from "../services/getBooks";
 import { MongoDBBooksRepository } from "../repositories/mongoDB/MongoDBBooksRepository";
 import { DeleteBook } from "../services/deleteBook";
-import {UpdateBook} from "../services/updateBook";
+import { UpdateBook } from "../services/updateBook";
+import { GetBook } from "../services/getBook";
 
 export class BooksController {
 
@@ -55,8 +56,27 @@ export class BooksController {
     }
 
     public async getBook(req: Request, res: Response) {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({
+                message: 'Bad Request',
+            });
+        }
+
+        const booksRepository = new MongoDBBooksRepository();
+        const getBook = new GetBook(booksRepository);
+
+        const book = await getBook.execute(parseInt(id));
+
         res.status(200).json({
-            message: 'GET ESPCIFIC BOOK',
+            message: 'Book retrieved successfully',
+            book: {
+                id: book.id,
+                title: book.title,
+                author: book.author,
+                genre: book.genre,
+            },
         });
     }
 
